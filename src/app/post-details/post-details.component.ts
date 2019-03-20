@@ -11,6 +11,7 @@ export class PostDetailsComponent implements OnInit {
 
   constructor(private router : ActivatedRoute, private postService: PostService) { }
 
+  idPost: 0;
   comments: any[] = [];
   myPost: any = {
     id: 0,
@@ -19,20 +20,20 @@ export class PostDetailsComponent implements OnInit {
   }
  
   ngOnInit() {
-    let idPost = this.router.snapshot.params.id;
-    this.recupPostById(idPost);
-    this.recupComments(idPost);
+    this.idPost = this.router.snapshot.params.id;
+    this.recupPostById();
+    this.recupComments();
   }
  
-  recupPostById(id){
-    this.postService.recuperPost(id).subscribe(res =>{
+  recupPostById(){
+    this.postService.recuperPost(this.idPost).subscribe(res =>{
     this.myPost = res;
     
     })
   }
 
-  recupComments(id){
-    this.postService.recuperCommentPost(id).subscribe((res: any[]) =>{
+  recupComments(){
+    this.postService.recuperCommentPost(this.idPost).subscribe((res: any[]) =>{
       this.comments = res;
       
     });
