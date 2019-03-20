@@ -1,0 +1,30 @@
+<div class="row">
+    <div class="col-md-4" *ngFor="let course of courses; index as i, even as e, last as l, first as f">
+      <div class="card my-2">
+       
+        <div class="card-body">
+          <h4 class="card-title">{{ course.name | uppercase }}</h4>
+          <div class="card-text">
+            <p>{{ course.description }}</p>  
+            <div class="text-center">
+              <app-votes 
+                [like]="course.votes.like"         
+                [dis-like]="course.votes.disLike"
+                (onClickVote)="voteFromChildToParent($event, course)">
+              </app-votes>
+          {{ course.votes | json }}
+                 <hr>
+                <button class="btn btn-dark btn-sm"
+                  (click)="editCourse(course)">
+                    <i class="fa fa-pencil"></i> Edit
+                  </button>
+                  <button class="btn ml-1 btn-danger btn-sm" 
+                  (click)="deleteCourse(i)">
+                    <i class="fa fa-trash"></i> Delete
+                  </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> 

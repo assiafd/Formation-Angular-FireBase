@@ -1,0 +1,20 @@
+
+<h2>Comments of Post {{ myPost.id }}</h2>
+<hr>
+<h5><b><i>Title of Post :</i></b> {{ myPost.title }}</h5>
+<hr>
+<table class="table table-striped" >
+    <thead>
+      <tr>
+        <th>Name of Comment</th>
+        <th>Body of Comment</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>   
+      <tr *ngFor="let comment of comments">
+        <td>{{ comment.name }}</td>
+        <td>{{ comment.body }}</td>
+      </tr>
+    </tbody>
+  </table>

@@ -1,0 +1,59 @@
+<div>
+  <h1>{{ title }}</h1>
+  
+  <!-- <img [src]="image" alt="My picture"> -->
+  <input type="text" placeholder="New course..." class="form-control mb-1" [(ngModel)]="myCourse.name">
+  
+  <input type="text" placeholder="Price" class="form-control mb-1" [(ngModel)]="myCourse.price">
+ 
+  <textarea class="form-control mb-2" placeholder="Description" rows="2" [(ngModel)]="myCourse.description"></textarea>
+ 
+  <button *ngIf="!editable" class="btn btn-success btn-block" (click)="addCourse()" [disabled]="courses.length == 10">
+    <i class="fa fa-plus"></i> Add
+  </button>
+
+  <button *ngIf="editable" class="btn btn-warning btn-block" (click)="updateCourse()">
+      <i class="fa fa-refresh"></i> Update
+  </button>
+
+  <div *ngIf="courses.length; then listCourses else noCourses"></div>
+
+    <ng-template #listCourses>
+        <div class="alert" [ngClass]="{
+          ' alert-info': courses.length < 5,
+          ' alert-secondary': courses.length >= 5 && courses.length < 10,
+          ' alert-danger': courses.length == 10
+        }"
+        
+        [ngStyle]="{
+          size: courses.length == 6 ? '30px' : '20px',
+          color: courses.length == 6 ? 'white' : 'black'
+        }"
+        >
+            il y a {{ courses.length }} cours
+        </div> 
+    </ng-template>
+    
+    <ng-template #noCourses>
+      <div class="alert alert-warning" >
+        Pas de cours
+      </div> 
+    </ng-template>
+    
+     
+      <div class="btn-group my-3" role="group">
+        <button (click)="showModeDisplay(true)" type="button" class="btn btn-secondary">
+          <i class="fa fa-list-ul"></i>
+        </button>
+        <button (click)="showModeDisplay(false)" type="button" class="btn btn-secondary">
+          <i class="fa fa-th"></i>
+        </button>
+      
+      </div>
+
+    <app-card-course [courses]="courses" *ngIf="!showList"></app-card-course>
+
+    <app-table-course [courses]="courses" *ngIf="showList"></app-table-course>
+
+
+</div>

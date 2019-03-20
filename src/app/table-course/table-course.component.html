@@ -1,0 +1,50 @@
+<table class="table" *ngIf="courses.length" >
+    <thead>
+      <tr>
+        <th></th>
+        <th>Vote</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Price</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <tr [ngClass]="{
+        'table-info': f,
+        'table-success': l
+      }" 
+      *ngFor="let course of courses; index as i, even as e, last as l, first as f">
+        <td style="cursor: pointer">
+          <i class="fa fa-power-off" [ngClass]="{
+            'icon-danger': !course.active,
+            'icon-success': course.active
+          }"
+          (click)="toggleCourse(course)"></i>
+        </td>
+        <td nowrap> 
+          <app-votes 
+            [like]="course.votes.like"         
+            [dis-like]="course.votes.disLike"
+            (onClickVote)="voteFromChildToParent($event, course)"
+           
+          ></app-votes>
+          {{ course.votes | json }}
+        </td>
+        <td>{{ course.name | titlecase }}</td>
+        <td>{{ course.description }}</td>
+        <td>{{ course.price | currency:'GBP':'symbol':'1.1-1' }}</td>
+        <td class="text-right" nowrap>
+          <button class="btn btn-dark btn-sm"
+          (click)="editCourse(course)">
+            <i class="fa fa-pencil"></i>
+          </button>
+          <button class="btn ml-1 btn-danger btn-sm" 
+          (click)="deleteCourse(i)">
+            <i class="fa fa-trash"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
